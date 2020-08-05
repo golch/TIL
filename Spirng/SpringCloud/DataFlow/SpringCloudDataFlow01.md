@@ -1,4 +1,4 @@
-Spring Cloud Data Flow #1
+# Spring Cloud Data Flow #1
 
 2020.08.03
 
@@ -18,7 +18,7 @@ Spirng Cloud Data Flow 를 Local 에 설치하고, 기존에 만들어둔 Spring
 실수로 회사 github 계정으로 커밋을 해버렸다. 다시 커밋하자.
 
 
-참고 사이트
+> 참고 사이트
 https://dataflow.spring.io/docs/installation/local/docker/
 https://dataflow.spring.io/docs/batch-developer-guides/batch/data-flow-spring-batch/
 
