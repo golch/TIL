@@ -64,6 +64,38 @@ public String getFileText(String location) {
 로컬에서 테스트를 무사히 해서 서버에 배포를 했는데, 리눅스 서버에서 경로를 못찾는다!
 어떻게 해야할까 ㅠㅠ
 
+### 서버에 배포 이후 경로를 못찾는 문제
+
+원인은 로컬에서는 jar 파일을 만들지 않고, IDE(intellij) 가 친절하게 경로를 잡아주기 때문이다.
+서버에서는 당연히 jar 로 빌드한 파일을 실행하게 되는데, 이렇게 하면 경로 잡아주는거 그런거 없다.
+
+구글 검색을 해보면 여러가지 솔루션을 찾을 수 있는데 나는 아래와 같이 변경하여 해결하였다.
+
+```java
+    /**
+     * classpath 안의 파일의 내용을 읽어오는 메서드
+     * @param location
+     * @return
+     */
+    public String readClassPathFile(String location) {
+        ClassPathResource classPathResource = new ClassPathResource(location);
+
+        try {
+            String result = new BufferedReader(new InputStreamReader(classPathResource.getInputStream(), Charsets.UTF_8))
+                    .lines().collect(Collectors.joining("\n"));
+
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+```
+
+즉, ClassPathResource 클래스의 메서드 중 getFile 이나 getUrl 을 사용하지 않고, 대신 getInputStream() 을 사용하는 방법이다.
+이렇게 하면 로컬이나 서버에서나 상관없이 classpath 내의 외부 파일을 읽어올 수 있다.
+
+
 
 
 > 참고 사이트
